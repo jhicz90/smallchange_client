@@ -1,0 +1,9 @@
+@import "bootstrap/dist/css/bootstrap.min.css";
+@import "./buttons.css";
+@import "./modals.css";
+@import "./components.css";
+
+body {
+    margin: 0;
+    padding: 0;
+}
