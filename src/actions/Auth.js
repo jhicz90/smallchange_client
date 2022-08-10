@@ -1,30 +1,23 @@
 import { fetchByToken, fetchNoToken } from '../helpers/Fetch'
 import { Actions } from '../types/Actions'
-import { baseFilesURL } from '../types/Url'
 
 export const startLogin = ({ email, password }) => {
     return async (dispatch) => {
         dispatch(loginCheck())
         const resp = await fetchNoToken({
-            endpoint: 'users/auth-via-email',
-            data: { email, password },
+            endpoint: 'usersys/login',
+            data: { email, password, remenber: true },
             method: 'POST',
             messageOk: `Inicio de sesión correctamente con: ${email}`,
             messageError: `Los datos ingresados no son los correctos`
         })
 
         if (resp.ok) {
-            const { token, user } = resp.data
-            const { email, profile } = user
-            const collection = profile['@collectionId']
-            const id = profile['id']
-            const userId = profile['userId']
-            const name = profile['name']
-            const avatar = profile['avatar'].length === 0 ? '' : `${baseFilesURL}/${collection}/${id}/${profile['avatar']}`
+            const { token, uid, names, surnames, image } = resp.data
 
             localStorage.setItem('token', token)
 
-            dispatch(login({ uid: userId, email, name, avatar }))
+            dispatch(login({ uid, names, surnames, image }))
         } else {
             dispatch(loginCheckFail())
         }
@@ -35,7 +28,7 @@ export const startRegister = ({ email, password, passwordConfirm }) => {
     return async (dispatch) => {
 
         const resp = await fetchNoToken({
-            endpoint: 'users',
+            endpoint: 'usersys/register',
             data: { email, password, passwordConfirm },
             method: 'POST',
             messageOk: `El usuario con el correo: ${email} se registro exitosamente`,
@@ -65,20 +58,18 @@ export const startChecking = () => {
 
 export const checkToken = () => {
     return async (dispatch) => {
-        const resp = await fetchByToken({ endpoint: 'users/refresh', method: 'POST', notify: false })
+        const resp = await fetchByToken({
+            endpoint: 'usersys/refresh',
+            method: 'POST',
+            notify: false
+        })
 
         if (resp.ok) {
-            const { token, user } = resp.data
-            const { email, profile } = user
-            const collection = profile['@collectionId']
-            const id = profile['id']
-            const userId = profile['userId']
-            const name = profile['name']
-            const avatar = profile['avatar'].length === 0 ? '' : `${baseFilesURL}/${collection}/${id}/${profile['avatar']}`
+            const { token, uid, names, surnames, image } = resp.data
 
             localStorage.setItem('token', token)
 
-            dispatch(login({ uid: userId, email, name, avatar }))
+            dispatch(login({ uid, names, surnames, image }))
         }
     }
 }
