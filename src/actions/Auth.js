@@ -11,11 +11,11 @@ export const startLogin = ({ userpass, password }) => {
         })
 
         if (resp.ok) {
-            const { token, uid, names, surnames, image } = resp.data
+            const { token, uid, names, surnames, image, stores } = resp.data
 
             localStorage.setItem('token', token)
 
-            dispatch(login({ uid, names, surnames, image }))
+            dispatch(login({ uid, names, surnames, image, stores }))
         } else {
             dispatch(loginCheckFail())
         }
@@ -61,11 +61,11 @@ export const checkToken = () => {
         })
 
         if (resp.ok) {
-            const { token, uid, names, surnames, image } = resp.data
+            const { token, uid, names, surnames, image, stores } = resp.data
 
             localStorage.setItem('token', token)
 
-            dispatch(login({ uid, names, surnames, image }))
+            dispatch(login({ uid, names, surnames, image, stores }))
         }
     }
 }

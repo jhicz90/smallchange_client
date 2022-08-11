@@ -1,7 +1,8 @@
 import React from 'react'
+import { CheckStoreNew } from '../../components/app/CheckStoreNew'
 
 export const Home = () => {
     return (
-        <div className="">Inicio</div>
+        <CheckStoreNew />
     )
 }

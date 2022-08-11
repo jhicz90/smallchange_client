@@ -1,7 +1,6 @@
 import { toast } from 'react-hot-toast'
 
 export const MessageAlert = ({ type = 0, content, delay = 5000 }) => {
-    console.log(type, content, delay)
     switch (type) {
         case 1:
             toast(content, { duration: delay })
