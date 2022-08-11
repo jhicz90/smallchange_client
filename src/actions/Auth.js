@@ -1,15 +1,13 @@
 import { fetchByToken, fetchNoToken } from '../helpers/Fetch'
 import { Actions } from '../types/Actions'
 
-export const startLogin = ({ email, password }) => {
+export const startLogin = ({ userpass, password }) => {
     return async (dispatch) => {
         dispatch(loginCheck())
         const resp = await fetchNoToken({
             endpoint: 'usersys/login',
-            data: { email, password, remenber: true },
-            method: 'POST',
-            messageOk: `Inicio de sesión correctamente con: ${email}`,
-            messageError: `Los datos ingresados no son los correctos`
+            data: { userpass, password, remenber: true },
+            method: 'POST'
         })
 
         if (resp.ok) {
@@ -24,19 +22,17 @@ export const startLogin = ({ email, password }) => {
     }
 }
 
-export const startRegister = ({ email, password, passwordConfirm }) => {
+export const startRegister = ({ names, surnames, gender, docid, username, email, password, passwordConfirm }) => {
     return async (dispatch) => {
 
         const resp = await fetchNoToken({
             endpoint: 'usersys/register',
-            data: { email, password, passwordConfirm },
-            method: 'POST',
-            messageOk: `El usuario con el correo: ${email} se registro exitosamente`,
-            messageError: `La cuenta no se pudo registrar`
+            data: { names, surnames, gender, docid, username, email, password, passwordConfirm },
+            method: 'POST'
         })
 
         if (resp.ok) {
-            dispatch(startLogin({ email, password }))
+            dispatch(startLogin({ userpass: email, password }))
         }
     }
 }

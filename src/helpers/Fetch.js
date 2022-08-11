@@ -2,7 +2,7 @@ import axios from 'axios'
 import { baseURL } from '../types/Url'
 import { MessageAlert } from './ManagerMsg'
 
-export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, method = 'GET', notify = true, messageOk = '', messageError = '' }) => {
+export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, method = 'GET', notify = true }) => {
     try {
         if (method === 'GET') {
             const resp = await axios({
@@ -17,12 +17,8 @@ export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, meth
 
             const bodyResponse = resp.data
 
-            if (resp.status === 200 && notify) {
-                if (messageOk === '') {
-                    MessageAlert({ type: 1, msg: resp.statusText })
-                } else {
-                    MessageAlert({ type: 1, msg: messageOk })
-                }
+            if (bodyResponse.msg !== undefined && notify) {
+                bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
             return { ok: true, data: bodyResponse }
@@ -39,12 +35,8 @@ export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, meth
 
             const bodyResponse = resp.data
 
-            if (resp.status === 200 && notify) {
-                if (messageOk === '') {
-                    MessageAlert({ type: 1, msg: resp.statusText })
-                } else {
-                    MessageAlert({ type: 1, msg: messageOk })
-                }
+            if (bodyResponse.msg !== undefined && notify) {
+                bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
             return { ok: true, data: bodyResponse }
@@ -53,10 +45,9 @@ export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, meth
         console.log(err)
 
         if (notify) {
-            if (err.response.data === undefined) {
-                MessageAlert({ type: 2, msg: messageError !== '' ? messageError : err.message })
-            } else {
-                MessageAlert({ type: 2, msg: messageError !== '' ? messageError : err.response.data.message })
+            const { data } = err.response
+            if (data.hasOwnProperty('msg')) {
+                data.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
         }
 
@@ -65,7 +56,7 @@ export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, meth
     }
 }
 
-export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, method = 'GET', notify = true, messageOk = '', messageError = '' }) => {
+export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, method = 'GET', notify = true }) => {
     const token = localStorage.getItem('token') || ''
 
     try {
@@ -83,12 +74,8 @@ export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, meth
 
             const bodyResponse = resp.data
 
-            if (resp.status === 200 && notify) {
-                if (messageOk === '') {
-                    MessageAlert({ type: 1, msg: resp.statusText })
-                } else {
-                    MessageAlert({ type: 1, msg: messageOk })
-                }
+            if (bodyResponse.msg !== undefined && notify) {
+                bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
             return { ok: true, data: bodyResponse }
@@ -98,7 +85,7 @@ export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, meth
                 baseURL,
                 headers: {
                     'Content-type': 'application/json',
-                    'Authorization': `User ${token}`
+                    'Authorization': `${token}`
                 },
                 url: endpoint,
                 data
@@ -106,12 +93,8 @@ export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, meth
 
             const bodyResponse = resp.data
 
-            if (resp.status === 200 && notify) {
-                if (messageOk === '') {
-                    MessageAlert({ type: 1, msg: resp.statusText })
-                } else {
-                    MessageAlert({ type: 1, msg: messageOk })
-                }
+            if (bodyResponse.msg !== undefined && notify) {
+                bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
             return { ok: true, data: bodyResponse }
@@ -120,10 +103,9 @@ export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, meth
         console.log(err)
 
         if (notify) {
-            if (err.response.data === undefined) {
-                MessageAlert({ type: 2, msg: messageError !== '' ? messageError : err.message })
-            } else {
-                MessageAlert({ type: 2, msg: messageError !== '' ? messageError : err.response.data.message })
+            const { data } = err.response
+            if (data.hasOwnProperty('msg')) {
+                data.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
         }
 
@@ -141,7 +123,7 @@ export const fetchUpFilesByToken = async ({ endpoint = '', data = {}, method = '
             method,
             baseURL,
             headers: {
-                'Authorization': `User ${token}`
+                'Authorization': `${token}`
             },
             url: endpoint,
             data
@@ -149,12 +131,8 @@ export const fetchUpFilesByToken = async ({ endpoint = '', data = {}, method = '
 
         const bodyResponse = resp.data
 
-        if (resp.status === 200 && notify) {
-            if (messageOk === '') {
-                MessageAlert({ type: 1, msg: resp.statusText })
-            } else {
-                MessageAlert({ type: 1, msg: messageOk })
-            }
+        if (bodyResponse.msg !== undefined && notify) {
+            bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
         }
 
         return { ok: true, data: bodyResponse }
@@ -162,10 +140,9 @@ export const fetchUpFilesByToken = async ({ endpoint = '', data = {}, method = '
         console.log(err)
 
         if (notify) {
-            if (err.response.data === undefined) {
-                MessageAlert({ type: 2, msg: messageError !== '' ? messageError : err.message })
-            } else {
-                MessageAlert({ type: 2, msg: messageError !== '' ? messageError : err.response.data.message })
+            const { data } = err.response
+            if (data.hasOwnProperty('msg')) {
+                data.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
         }
 

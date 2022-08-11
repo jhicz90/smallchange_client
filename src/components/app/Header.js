@@ -7,7 +7,7 @@ import { startLogout } from '../../actions/Auth'
 export const NavHeader = () => {
 
     const dispatch = useDispatch()
-    const { name, avatar } = useSelector(state => state.auth)
+    const { name, image } = useSelector(state => state.auth)
 
     const handleLogout = () => {
         dispatch(startLogout())
@@ -28,7 +28,7 @@ export const NavHeader = () => {
                         <Nav>
                             <Navbar.Text>
                                 {
-                                    avatar !== ''  && <img src={avatar} alt={'avatar'} />
+                                    image !== ''  && <img src={image} alt={'avatar'} />
                                 }
                                 <span className="text-primary">{name}</span>
                             </Navbar.Text>

@@ -1,21 +1,26 @@
 import { toast } from 'react-hot-toast'
 
-export const MessageAlert = ({ type = 0, msg, delay = 5000 }) => {
+export const MessageAlert = ({ type = 0, content, delay = 5000 }) => {
+    console.log(type, content, delay)
     switch (type) {
         case 1:
-            toast.success(msg, { duration: delay })
+            toast(content, { duration: delay })
             break
 
         case 2:
-            toast.error(msg, { duration: delay })
+            toast.success(content, { duration: delay })
             break
 
         case 3:
-            toast.custom(msg, { duration: delay })
+            toast.error(content, { duration: delay })
+            break
+
+        case 4:
+            toast.custom(content, { duration: delay })
             break
 
         default:
-            toast(msg, { duration: delay })
+            toast(content, { duration: delay })
             break
     }
 }

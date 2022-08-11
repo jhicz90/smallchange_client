@@ -14,12 +14,12 @@ export const Register = () => {
     const { register, getValues, handleSubmit } = useForm()
 
     const handleRegister = (data) => {
-        const { email, password, passwordConfirm } = data
-        dispatch(startRegister({ email, password, passwordConfirm }))
+        const { names, surnames, gender, docid, username, email, password, passwordConfirm } = data
+        dispatch(startRegister({ names, surnames, gender, docid, username, email, password, passwordConfirm }))
     }
 
     return (
-        <Modal show={true} onHide={() => navigate('/web')}>
+        <Modal show={true} size={'lg'} onHide={() => navigate('/web')}>
             <Modal.Header closeButton closeVariant='white'>
                 <Modal.Title>Registro</Modal.Title>
             </Modal.Header>
@@ -28,51 +28,139 @@ export const Register = () => {
                 <CardSub>
                     <div className='card-body'>
                         <form onSubmit={handleSubmit(handleRegister)}>
-                            <FloatingLabel
-                                controlId='email'
-                                label='Correo'
-                                className='mb-3'
-                            >
-                                <Form.Control
-                                    type='email'
-                                    placeholder='nombre@ejemplo.com'
-                                    autoComplete='off'
-                                    autoFocus
-                                    {...register('email', { required: true })}
-                                />
-                            </FloatingLabel>
-                            <FloatingLabel
-                                controlId='password'
-                                label='Contraseña'
-                                className='mb-3'
-                            >
-                                <Form.Control
-                                    type='password'
-                                    placeholder='******'
-                                    autoComplete='off'
-                                    {...register('password', { required: true })}
-                                />
-                            </FloatingLabel>
-                            <FloatingLabel
-                                controlId='passwordConfirm'
-                                label='Confirme contraseña'
-                                className='mb-3'
-                            >
-                                <Form.Control
-                                    type='password'
-                                    placeholder='******'
-                                    autoComplete='off'
-                                    {...register('passwordConfirm', {
-                                        required: true,
-                                        validate: {
-                                            matchesPreviousPassword: (value) => {
-                                                const { password } = getValues();
-                                                return password === value || "Las contraseñas no coinciden!";
-                                            }
-                                        }
-                                    })}
-                                />
-                            </FloatingLabel>
+                            <div className="row">
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='names'
+                                        label='Nombres'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='text'
+                                            placeholder='Dejanos tu nombre'
+                                            autoComplete='off'
+                                            autoFocus
+                                            {...register('names', { required: true })}
+                                        />
+                                    </FloatingLabel>
+                                </div>
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='surnames'
+                                        label='Apellidos'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='text'
+                                            placeholder='Tambien tus apellidos'
+                                            autoComplete='off'
+                                            {...register('surnames', { required: true })}
+                                        />
+                                    </FloatingLabel>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='gender'
+                                        label='Género'
+                                        className='mb-3'
+                                    >
+                                        <Form.Select
+                                            type='text'
+                                            placeholder='Indica tu género'
+                                            autoComplete='off'
+                                            {...register('gender', { required: true })}
+                                        >
+                                            <option value={'F'}>Mujer</option>
+                                            <option value={'M'}>Hombre</option>
+                                            <option value={'O'}>Otro</option>
+                                        </Form.Select>
+                                    </FloatingLabel>
+                                </div>
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='docid'
+                                        label='Documento de identidad'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='text'
+                                            placeholder='Tu documento es necesario'
+                                            autoComplete='off'
+                                            {...register('docid', { required: true })}
+                                        />
+                                    </FloatingLabel>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='username'
+                                        label='Nombre de usuario'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='text'
+                                            placeholder='nombredeinicio'
+                                            autoComplete='off'
+                                            {...register('username', { required: true })}
+                                        />
+                                    </FloatingLabel>
+                                </div>
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='email'
+                                        label='Correo'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='email'
+                                            placeholder='nombre@ejemplo.com'
+                                            autoComplete='off'
+                                            {...register('email', { required: true })}
+                                        />
+                                    </FloatingLabel>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='password'
+                                        label='Contraseña'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='password'
+                                            placeholder='******'
+                                            autoComplete='off'
+                                            {...register('password', { required: true })}
+                                        />
+                                    </FloatingLabel>
+                                </div>
+                                <div className="col-12 col-md-6">
+                                    <FloatingLabel
+                                        controlId='passwordConfirm'
+                                        label='Confirme contraseña'
+                                        className='mb-3'
+                                    >
+                                        <Form.Control
+                                            type='password'
+                                            placeholder='******'
+                                            autoComplete='off'
+                                            {...register('passwordConfirm', {
+                                                required: true,
+                                                validate: {
+                                                    matchesPreviousPassword: (value) => {
+                                                        const { password } = getValues();
+                                                        return password === value || "Las contraseñas no coinciden!";
+                                                    }
+                                                }
+                                            })}
+                                        />
+                                    </FloatingLabel>
+                                </div>
+                            </div>
                             <Button style={{ width: '100%' }} size='lg' type='submit' variant='primary'>
                                 REGISTRAR
                                 <img className='ms-1' src={'/assets/easy.png'} alt='join' width={24} height={24} />

@@ -14,8 +14,8 @@ export const Login = () => {
     const { register, handleSubmit } = useForm();
 
     const handleLogin = (data) => {
-        const { email, password } = data
-        dispatch(startLogin({ email, password }))
+        const { userpass, password } = data
+        dispatch(startLogin({ userpass, password }))
     }
 
     return (
@@ -29,16 +29,16 @@ export const Login = () => {
                     <div className='card-body'>
                         <form onSubmit={handleSubmit(handleLogin)}>
                             <FloatingLabel
-                                controlId='email'
-                                label='Correo'
+                                controlId='userpass'
+                                label='Correo o nombre de usuario'
                                 className='mb-3'
                             >
                                 <Form.Control
-                                    type='email'
+                                    type='text'
                                     placeholder='nombre@ejemplo.com'
                                     autoComplete='off'
                                     autoFocus
-                                    {...register('email', { required: true })}
+                                    {...register('userpass', { required: true })}
                                 />
                             </FloatingLabel>
                             <FloatingLabel
