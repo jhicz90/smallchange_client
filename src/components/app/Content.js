@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import { Container } from 'react-bootstrap'
 
 const ContentApp = styled(Container)`
-    padding-top: ${props => props.theme.header};
-    height: 100vh;
-    width: 80% !important;
+    min-height: 100vh;
+    position: relative;
 `
 
 export const MainContent = ({ children }) => {
     return (
-        <ContentApp>
+        <ContentApp fluid className="g-0">
             {children}
         </ContentApp>
     )

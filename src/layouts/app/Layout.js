@@ -1,17 +1,22 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import styled from 'styled-components'
 import { MainContent } from '../../components/app/Content'
 import { NavHeader } from '../../components/app/Header'
+import { SideNav } from '../../components/app/SideNav'
+
+const RootApp = styled.div`
+    display: flex;
+`
 
 export const Layout = () => {
     return (
-        <div className="root-app">
-            <NavHeader />
+        <RootApp>
+            <SideNav />
             <MainContent>
-                <div style={{ marginTop: '18px' }}>
-                    <Outlet />
-                </div>
+                <NavHeader />
+                <Outlet />
             </MainContent>
-        </div>
+        </RootApp>
     )
 }

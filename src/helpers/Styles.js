@@ -9,7 +9,8 @@ export const mainTheme = {
     lg: '992px',
     xl: '1200px',
     xxl: '1400px',
-    spaceBottom: '3rem'
+    spaceBottom: '3rem',
+    widthSide: '220px'
 }
 
 export const FullPage = styled.div`

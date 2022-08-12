@@ -3,6 +3,9 @@ import { CheckStoreNew } from '../../components/app/CheckStoreNew'
 
 export const Home = () => {
     return (
-        <CheckStoreNew />
+        <>
+            <CheckStoreNew />
+            Bienvenido a SMALLCHANGE
+        </>
     )
 }
