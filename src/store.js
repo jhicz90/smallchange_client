@@ -3,10 +3,12 @@ import thunk from 'redux-thunk'
 
 import { AuthReducer } from './reducers/AuthReducer'
 import { UIReducer } from './reducers/UIReducer'
+import { StoreReducer } from './reducers/StoreReducer'
 
 const reducers = combineReducers({
     auth: AuthReducer,
-    ui: UIReducer
+    ui: UIReducer,
+    store: StoreReducer
 })
 
 export const store = createStore(

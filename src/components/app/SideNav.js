@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import { IoCartSharp, IoStorefrontSharp } from 'react-icons/io5'
 import { FaWarehouse } from 'react-icons/fa'
@@ -41,7 +41,7 @@ const SideNavBody = styled.div`
     flex-wrap: wrap;
 `
 
-const NavLink = styled(Link)`
+const NaviLink = styled(NavLink)`
     color: #fff;
     background-color: transparent;
     padding: 0.5rem 0.875rem !important;
@@ -85,22 +85,22 @@ export const SideNav = () => {
                 </NavHeader>
             </SideNavHeader>
             <SideNavBody>
-                <NavLink to={`/app/stores`}>
+                <NaviLink to={`/app/stores`}>
                     <IoStorefrontSharp />
                     Tienda ({stores.length})
-                </NavLink>
-                <NavLink to={`/app/products`}>
+                </NaviLink>
+                <NaviLink to={`/app/products`}>
                     <IoCartSharp />
                     Productos
-                </NavLink>
-                <NavLink to={`/app/warehouse`}>
+                </NaviLink>
+                <NaviLink to={`/app/warehouse`}>
                     <FaWarehouse />
                     Almacén
-                </NavLink>
-                <NavLink to={`/app/clients`}>
+                </NaviLink>
+                <NaviLink to={`/app/clients`}>
                     <HiUserGroup />
                     Clientes
-                </NavLink>
+                </NaviLink>
             </SideNavBody>
         </ContentSideNav>
     )

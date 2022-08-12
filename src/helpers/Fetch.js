@@ -21,7 +21,7 @@ export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, meth
                 bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
-            return { ok: true, data: bodyResponse }
+            return { ...bodyResponse }
         } else {
             const resp = await axios({
                 method,
@@ -39,7 +39,7 @@ export const fetchNoToken = async ({ endpoint = '', data = {}, params = {}, meth
                 bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
-            return { ok: true, data: bodyResponse }
+            return { ...bodyResponse }
         }
     } catch (err) {
         console.log(err)
@@ -66,7 +66,7 @@ export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, meth
                 baseURL,
                 headers: {
                     'Content-type': 'application/json',
-                    'Authorization': `User ${token}`
+                    'Authorization': `${token}`
                 },
                 url: endpoint,
                 params
@@ -78,7 +78,7 @@ export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, meth
                 bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
-            return { ok: true, data: bodyResponse }
+            return { ...bodyResponse }
         } else {
             const resp = await axios({
                 method,
@@ -97,7 +97,7 @@ export const fetchByToken = async ({ endpoint = '', data = {}, params = {}, meth
                 bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
             }
 
-            return { ok: true, data: bodyResponse }
+            return { ...bodyResponse }
         }
     } catch (err) {
         console.log(err)
@@ -135,7 +135,7 @@ export const fetchUpFilesByToken = async ({ endpoint = '', data = {}, method = '
             bodyResponse.msg.forEach(({ type, content, delay }) => MessageAlert({ type, content, delay }))
         }
 
-        return { ok: true, data: bodyResponse }
+        return { ...bodyResponse }
     } catch (err) {
         console.log(err)
 

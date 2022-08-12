@@ -1,4 +1,5 @@
 import React from 'react'
+import { Container } from 'react-bootstrap'
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import { MainContent } from '../../components/app/Content'
@@ -15,7 +16,9 @@ export const Layout = () => {
             <SideNav />
             <MainContent>
                 <NavHeader />
-                <Outlet />
+                <Container className='p-3'>
+                    <Outlet />
+                </Container>
             </MainContent>
         </RootApp>
     )

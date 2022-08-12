@@ -17,13 +17,13 @@ export const StoreReducer = (state = initialState, action) => {
                 list: [...action.payload]
             }
 
-        case Actions.startLoadingListPermission:
+        case Actions.startLoadingListStore:
             return {
                 ...state,
                 loadingList: true
             }
 
-        case Actions.stopLoadingListPermission:
+        case Actions.stopLoadingListStore:
             return {
                 ...state,
                 loadingList: false

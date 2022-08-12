@@ -11,7 +11,7 @@ export const startLogin = ({ userpass, password }) => {
         })
 
         if (resp.ok) {
-            const { token, uid, names, surnames, image, stores } = resp.data
+            const { token, uid, names, surnames, image, stores } = resp
 
             localStorage.setItem('token', token)
 
@@ -61,7 +61,7 @@ export const checkToken = () => {
         })
 
         if (resp.ok) {
-            const { token, uid, names, surnames, image, stores } = resp.data
+            const { token, uid, names, surnames, image, stores } = resp
 
             localStorage.setItem('token', token)
 
