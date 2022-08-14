@@ -12,7 +12,7 @@ const RootApp = styled.div`
 
 export const Layout = () => {
     return (
-        <RootApp>
+        <RootApp className='root-app'>
             <SideNav />
             <MainContent>
                 <NavHeader />

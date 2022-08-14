@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Route, Routes, useLocation } from 'react-router-dom'
-import { mobile } from '../actions/UI'
+import { hideSidebar, mobile, showSidebar } from '../actions/UI'
 import { Layout } from '../layouts/app/Layout'
 import { Home } from '../pages/app/home'
 import { EditOfStore } from '../pages/app/store/edit'
@@ -15,10 +15,12 @@ const AppRoot = () => {
 
     useLayoutEffect(() => {
         const updateSize = () => {
-            if (window.innerWidth > 800) {
+            if (window.innerWidth > 1200) {
                 dispatch(mobile(false))
+                dispatch(showSidebar())
             } else {
                 dispatch(mobile(true))
+                dispatch(hideSidebar())
             }
         }
         window.addEventListener('resize', updateSize)

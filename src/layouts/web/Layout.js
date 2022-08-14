@@ -5,7 +5,7 @@ import { NavHeader } from '../../components/web/Header'
 
 export const Layout = () => {
     return (
-        <div className="root-web">
+        <div className='root-web'>
             <MainContent>
                 <NavHeader />
                 <Outlet />
