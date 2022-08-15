@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import styled from 'styled-components'
-import { MdMenuOpen } from 'react-icons/md'
+import { FaBox } from 'react-icons/fa'
+import { MdMenuOpen, MdPointOfSale } from 'react-icons/md'
 import { startLogout } from '../../actions/Auth'
 import { showSidebar } from '../../actions/UI'
 
@@ -49,9 +50,14 @@ export const NavHeader = () => {
                 <Navbar.Toggle aria-controls="navbarScroll" />
                 <Navbar.Collapse id="navbarScroll">
                     <Nav className="me-auto">
-                        {/* <HeaderDropdownShop /> */}
                     </Nav>
                     <Nav>
+                        <Nav.Link>
+                            <FaBox color='#a17a0f' className='me-1' />Ingresar producto
+                        </Nav.Link>
+                        <Nav.Link>
+                            <MdPointOfSale color='green' className='me-1' />Ingresar venta
+                        </Nav.Link>
                         <Navbar.Text>
                             {
                                 image !== '' && <img src={image} alt={'avatar'} />

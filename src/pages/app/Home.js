@@ -5,7 +5,7 @@ export const Home = () => {
     return (
         <>
             <CheckStoreNew />
-            Bienvenido a SMALLCHANGE
+            Bienvenido a SMALLCHANGE!!!
         </>
     )
 }
