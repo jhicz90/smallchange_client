@@ -32,3 +32,15 @@
     border-bottom-right-radius: 16px;
     border-bottom-left-radius: 16px;
 }
+
+.modal .modal-header > .nav-pills .nav-link {
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 16px;
+}
+
+.modal .modal-header > .nav-pills .nav-link.active,
+.modal .modal-header > .nav-pills .show > .nav-link {
+    color: #000;
+    background-color: #fff;
+}

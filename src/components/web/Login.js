@@ -11,7 +11,7 @@ export const Login = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const { state } = useLocation()
-    const { register, handleSubmit } = useForm();
+    const { register, handleSubmit } = useForm()
 
     const handleLogin = (data) => {
         const { userpass, password } = data

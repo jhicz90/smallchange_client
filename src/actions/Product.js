@@ -14,6 +14,35 @@ export const startNewProduct = () => {
     }
 }
 
+export const startSaveNewProduct = () => {
+    return async (dispatch, getState) => {
+        const { activeNew } = getState().product
+
+        const resp = await fetchByToken({
+            endpoint: `product/create/new`,
+            method: 'POST',
+            data: activeNew
+        })
+
+        if (resp.ok) {
+            dispatch(closeModalNewProduct())
+        }
+    }
+}
+
+export const findProduct = async (search) => {
+    const resp = await fetchByToken({
+        endpoint: 'product/list',
+        params: { search }
+    })
+
+    if (resp.ok) {
+        return resp.docs
+    } else {
+        return []
+    }
+}
+
 export const loadListProduct = (data) => ({
     type: Actions.loadListProduct,
     payload: data

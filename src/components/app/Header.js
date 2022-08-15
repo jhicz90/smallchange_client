@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import styled from 'styled-components'
-import { FaBox } from 'react-icons/fa'
 import { MdMenuOpen, MdPointOfSale } from 'react-icons/md'
 import { startLogout } from '../../actions/Auth'
 import { showSidebar } from '../../actions/UI'
+import { ProductFindAndRegister } from './ProductRegister'
 
 const NavMenu = styled(Navbar)`
     min-height: ${props => props.theme.header};
@@ -52,9 +52,7 @@ export const NavHeader = () => {
                     <Nav className="me-auto">
                     </Nav>
                     <Nav>
-                        <Nav.Link>
-                            <FaBox color='#a17a0f' className='me-1' />Ingresar producto
-                        </Nav.Link>
+                        <ProductFindAndRegister />
                         <Nav.Link>
                             <MdPointOfSale color='green' className='me-1' />Ingresar venta
                         </Nav.Link>
