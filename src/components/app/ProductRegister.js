@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Alert, Button, Form, Modal, Nav, Tab } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { useForm } from 'react-hook-form'
+import { useForm, Controller } from 'react-hook-form'
 import { AiOutlineFileAdd, AiOutlineSearch } from 'react-icons/ai'
+import Select from 'react-select'
 import AsyncSelect from 'react-select/async'
 import { closeModalNewProduct, editActiveNewProduct, findProduct, openModalNewProduct, removeActiveNewProduct, startNewProduct, startSaveNewProduct } from '../../actions/Product'
 
@@ -32,8 +33,6 @@ export const ProductFindAndRegister = () => {
             >
                 <Tab.Container defaultActiveKey={'#search'}>
                     <Modal.Header closeButton closeVariant='white'>
-                        {/* Hola
-                        <Modal.Title>Inicio de sesión</Modal.Title> */}
                         <Nav className="flex-column flex-md-row gap-2" variant='pills'>
                             <Nav.Item>
                                 <Nav.Link style={{ cursor: 'pointer' }} eventKey="#search">
@@ -85,6 +84,7 @@ const SearchProduct = () => {
                 //     <OptionImage option={e} />
                 // }
                 getOptionValue={e => e._id}
+                getOptionLabel={e => e.name}
                 loadOptions={findProduct}
                 onChange={(e) => setFProduct(e)}
                 menuPlacement={'auto'}
@@ -100,14 +100,15 @@ const SearchProduct = () => {
 const RegisterProduct = () => {
 
     const dispatch = useDispatch()
-    const { activeNew } = useSelector(state => state.product)
-    const { register, handleSubmit } = useForm()
-
-    console.log('ACTIVE NEW ->', activeNew)
+    const { stores } = useSelector(state => state.auth)
+    const { register, control, handleSubmit } = useForm({
+        defaultValues: {
+            store: stores[0] || null
+        }
+    })
 
     const handleRegister = (data) => {
-        // const { name, code, desc, price, measure, category, batch } = data
-        dispatch(editActiveNewProduct(data))
+        dispatch(editActiveNewProduct({ ...data, store: data.store._id || '' }))
         dispatch(startSaveNewProduct())
     }
 
@@ -146,7 +147,7 @@ const RegisterProduct = () => {
                 <div className="col-12 col-md-6">
                     <Form.Group className='mb-3' controlId='pPrice'>
                         <Form.Label>Precio</Form.Label>
-                        <Form.Control {...register('price', { required: true, min: 0 })} type={'number'} />
+                        <Form.Control {...register('price', { required: true, min: 0 })} type={'number'} step={0.01} />
                     </Form.Group>
                 </div>
                 <div className="col-12 col-md-6">
@@ -165,18 +166,26 @@ const RegisterProduct = () => {
             </div>
             <div className="row">
                 <div className="col-12 col-md-6">
-                    <Form.Group className='mb-3' controlId='pCategory'>
-                        <Form.Label>Categoria</Form.Label>
-                        <Form.Control {...register('category', { required: true })} type={'text'} />
+                    <Form.Group className='mb-3' controlId='pStore'>
+                        <Form.Label>Tienda</Form.Label>
+                        <Controller
+                            name="store"
+                            control={control}
+                            rules={{ required: true }}
+                            render={({ field }) => <Select
+                                {...field}
+                                options={stores}
+                                getOptionLabel={e => e.name}
+                                getOptionValue={e => e._id}
+                                placeholder='Seleccione la tienda'
+                            />}
+                        />
                     </Form.Group>
                 </div>
                 <div className="col-12 col-md-6">
-                    <Form.Group className='mb-3' controlId='pBatch'>
-                        <Form.Label>Lote</Form.Label>
-                        <Form.Control {...register('batch', { required: true })} />
-                        <Form.Text className='text-muted'>
-                            Elija del lote que proviene esta producto
-                        </Form.Text>
+                    <Form.Group className='mb-3' controlId='pCategory'>
+                        <Form.Label>Categoria</Form.Label>
+                        <Form.Control {...register('category', { required: true })} type={'text'} />
                     </Form.Group>
                 </div>
             </div>
