@@ -1,22 +1,52 @@
 import React, { useEffect } from 'react'
-import { useHtml5QrCodeScanner } from 'react-html5-qrcode-reader'
+import { Html5Qrcode } from 'html5-qrcode'
 
-export const CodeScanner = ({ fps = 10, width = 250, height = 250, disableFlip = false }) => {
+const brConfig = { fps: 10, qrbox: { width: 400, height: 200 } }
+let html5QrCode
 
-    const { Html5QrcodeScanner } = useHtml5QrCodeScanner('https://unpkg.com/html5-qrcode@2.2.1/html5-qrcode.min.js')
+export const CodeScanner = (props) => {
 
     useEffect(() => {
-        if (Html5QrcodeScanner) {
-            let html5QrcodeScanner = new Html5QrcodeScanner('reader', { fps, qrbox: { width, height }, disableFlip }, false)
+        html5QrCode = new Html5Qrcode('reader')
 
-            html5QrcodeScanner.render(
-                (data) => console.log('success ->', data),
-                (err) => console.log('err ->', err)
-            )
+        return () => { html5QrCode = null }
+    }, [])
+
+    const handleClickAdvanced = () => {
+        const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+            props.onResult(decodedText)
+            handleStop()
         }
-    }, [Html5QrcodeScanner, fps, width, height, disableFlip])
+
+        html5QrCode.start(
+            { facingMode: "environment" },
+            brConfig,
+            qrCodeSuccessCallback
+        )
+    }
+
+    const handleStop = () => {
+        try {
+            html5QrCode
+                .stop()
+                .then((res) => {
+                    html5QrCode.clear()
+                })
+                .catch((err) => {
+                    console.log(err.message)
+                })
+        } catch (err) {
+            console.log(err)
+        }
+    }
 
     return (
-        <div id='reader' />
+        <div style={{ position: "relative" }}>
+            <div id="reader" width="100%" />
+            <button onClick={() => handleClickAdvanced()}>
+                click pro
+            </button>
+            <button onClick={() => handleStop()}>stop pro</button>
+        </div>
     )
 }
