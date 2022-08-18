@@ -15,10 +15,27 @@ export const mobile = (active) => ({
     }
 })
 
-export const openScanCode = () => ({
-    type: Actions.openScanCode
+export const finishScanCode = (decodedText) => {
+    return async (dispatch, getState) => {
+        const { modalSetCode } = getState().ui
+
+        if (decodedText.length > 0) {
+            modalSetCode(decodedText)
+        }
+        
+        dispatch(closeModalScanCode())
+    }
+}
+
+export const openModalScanCode = () => ({
+    type: Actions.openModalScanCode
 })
 
-export const closeScanCode = () => ({
-    type: Actions.closeScanCode
+export const closeModalScanCode = () => ({
+    type: Actions.closeModalScanCode
+})
+
+export const setCodeModal = (setCode) => ({
+    type: Actions.setCodeModal,
+    payload: setCode
 })

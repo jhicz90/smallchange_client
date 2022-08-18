@@ -5,13 +5,13 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 import { BsUpcScan } from 'react-icons/bs'
 import { closeModalNewProduct, editActiveNewProduct, removeActiveNewProduct, startSaveNewProduct } from '../../actions/Product'
-import { openScanCode } from '../../actions/UI'
+import { openModalScanCode, setCodeModal } from '../../actions/UI'
 
 export const ProductRegister = () => {
 
     const dispatch = useDispatch()
     const { stores } = useSelector(state => state.auth)
-    const { modalNew } = useSelector(state => state.product)
+    const { activeNew, modalNew } = useSelector(state => state.product)
     const { register, control, handleSubmit } = useForm({
         defaultValues: {
             store: stores[0] || null
@@ -26,6 +26,11 @@ export const ProductRegister = () => {
     const handleRegister = (data) => {
         dispatch(editActiveNewProduct({ ...data, store: data.store._id || '' }))
         dispatch(startSaveNewProduct())
+    }
+
+    const handleScanCode = () => {
+        dispatch(setCodeModal((code) => dispatch(editActiveNewProduct({ code }))))
+        dispatch(openModalScanCode())
     }
 
     return (
@@ -51,9 +56,9 @@ export const ProductRegister = () => {
                             <Form.Group className='mb-3' controlId='pCode'>
                                 <Form.Label>Código</Form.Label>
                                 <InputGroup>
-                                    <Form.Control {...register('code')} type={'text'} />
+                                    <Form.Control {...register('code')} type={'text'} defaultValue={activeNew.code} />
                                     <Button
-                                        onClick={() => dispatch(openScanCode())}
+                                        onClick={handleScanCode}
                                         variant='dark'
                                         style={{ display: 'flex', alignItems: 'center' }}
                                     >
