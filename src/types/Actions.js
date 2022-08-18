@@ -14,6 +14,8 @@ export const Actions = {
     showSidebar: '[ui] show sidebar menu',
     hideSidebar: '[ui] hide sidebar menu',
     sidebarMobile: '[ui] sidebar mobile',
+    openScanCode: '[ui] open modal scan code',
+    closeScanCode: '[ui] close modal scan code',
     //  UI
 
     // STORE

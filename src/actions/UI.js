@@ -14,3 +14,11 @@ export const mobile = (active) => ({
         active
     }
 })
+
+export const openScanCode = () => ({
+    type: Actions.openScanCode
+})
+
+export const closeScanCode = () => ({
+    type: Actions.closeScanCode
+})

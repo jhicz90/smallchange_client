@@ -2,7 +2,8 @@ import { Actions } from '../types/Actions'
 
 const initialState = {
     sidebar: true,
-    sidebarMobile: false
+    sidebarMobile: false,
+    modalScanCode: false
 }
 
 export const UIReducer = (state = initialState, action) => {
@@ -23,6 +24,18 @@ export const UIReducer = (state = initialState, action) => {
             return {
                 ...state,
                 sidebarMobile: action.payload.active
+            }
+
+        case Actions.openScanCode:
+            return {
+                ...state,
+                modalScanCode: true
+            }
+
+        case Actions.closeScanCode:
+            return {
+                ...state,
+                modalScanCode: false
             }
 
         default:

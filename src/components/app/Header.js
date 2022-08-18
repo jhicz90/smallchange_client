@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Button, Container, Nav, Navbar } from 'react-bootstrap'
 import styled from 'styled-components'
-import { MdMenuOpen, MdPointOfSale } from 'react-icons/md'
+import { FaBoxOpen } from 'react-icons/fa'
+import { MdMenuOpen, MdNoteAdd, MdOutlineAddShoppingCart } from 'react-icons/md'
 import { startLogout } from '../../actions/Auth'
 import { showSidebar } from '../../actions/UI'
-import { ProductFindAndRegister } from './ProductRegister'
+import { startNewProduct } from '../../actions/Product'
 
 const NavMenu = styled(Navbar)`
     min-height: ${props => props.theme.header};
@@ -32,6 +33,10 @@ export const NavHeader = () => {
         dispatch(startLogout())
     }
 
+    const handleNewProduct = () => {
+        dispatch(startNewProduct())
+    }
+
     return (
         <NavMenu collapseOnSelect bg='light' expand='lg' sticky='top' className='shadow-sm'>
             {
@@ -52,9 +57,14 @@ export const NavHeader = () => {
                     <Nav className="me-auto">
                     </Nav>
                     <Nav>
-                        <ProductFindAndRegister />
                         <Nav.Link>
-                            <MdPointOfSale color='green' className='me-1' />Ingresar venta
+                            <MdOutlineAddShoppingCart color='#ff5722' size={20} className='me-1' />Venta
+                        </Nav.Link>
+                        <Nav.Link>
+                            <FaBoxOpen color='#009688' size={20} className='me-1' />Compra
+                        </Nav.Link>
+                        <Nav.Link onClick={handleNewProduct}>
+                            <MdNoteAdd color='#3f51b5' size={20} className='me-1' />Producto
                         </Nav.Link>
                         <Navbar.Text>
                             {
