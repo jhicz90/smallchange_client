@@ -36,7 +36,7 @@ export const TableMixed = ({ columns = [], data = [] }) => {
 
     return (
         <Card className='overflow-hidden'>
-            <TableStyle striped>
+            <TableStyle striped responsive>
                 <thead>
                     <tr>
                         {columnsTable}

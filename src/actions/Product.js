@@ -35,7 +35,7 @@ export const startNewProduct = () => {
     }
 }
 
-export const startSaveNewProduct = () => {
+export const startSaveNewProduct = ({ next = false }) => {
     return async (dispatch, getState) => {
         const { activeNew } = getState().product
 
@@ -46,8 +46,46 @@ export const startSaveNewProduct = () => {
         })
 
         if (resp.ok) {
-            dispatch(closeModalNewProduct())
+            if (!next) {
+                dispatch(closeModalNewProduct())
+            } else {
+                dispatch(startNewProduct())
+            }
             dispatch(removeActiveNewProduct())
+            dispatch(startListProduct())
+        }
+    }
+}
+
+export const startGetProduct = (id) => {
+    return async (dispatch) => {
+        const resp = await fetchByToken({
+            endpoint: `product/edit/${id}`
+        })
+
+        if (resp.ok) {
+            dispatch(loadActiveProduct(resp.product))
+        }
+    }
+}
+
+export const startUpdateActiveProduct = () => {
+    return async (dispatch, getState) => {
+        const { active } = getState().product
+        const { _id } = active
+
+        const updateProduct = {
+            ...active
+        }
+
+        const resp = await fetchByToken({
+            endpoint: `product/edit/${_id}`,
+            data: updateProduct,
+            method: 'PUT'
+        })
+
+        if (resp.ok) {
+            dispatch(loadActiveProduct(resp.product))
             dispatch(startListProduct())
         }
     }

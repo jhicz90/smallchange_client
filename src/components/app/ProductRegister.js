@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,13 +12,8 @@ export const ProductRegister = () => {
     const dispatch = useDispatch()
     const { stores } = useSelector(state => state.auth)
     const { modalNew } = useSelector(state => state.product)
-    const { register, control, setValue, handleSubmit, reset } = useForm({
-        defaultValues: {
-            store: stores[0] || null,
-            price: 1,
-            code: ''
-        }
-    })
+    const { register, control, setValue, handleSubmit, reset } = useForm()
+    const [nextProduct, setNextProduct] = useState(true)
 
     const closeModal = () => {
         dispatch(removeActiveNewProduct())
@@ -27,7 +22,16 @@ export const ProductRegister = () => {
 
     const handleRegister = (data) => {
         dispatch(editActiveNewProduct({ ...data, store: data.store._id || '' }))
-        dispatch(startSaveNewProduct())
+        dispatch(startSaveNewProduct({ next: nextProduct }))
+        if (nextProduct) reset({
+            name: '',
+            code: '',
+            desc: '',
+            price: 1,
+            measure: 1,
+            store: stores[0] || null,
+            category: ''
+        })
     }
 
     const handleScanCode = () => {
@@ -37,11 +41,19 @@ export const ProductRegister = () => {
 
     useEffect(() => {
         reset({
-            store: stores[0] || null,
+            name: '',
+            code: '',
+            desc: '',
             price: 1,
-            code: ''
+            measure: 1,
+            store: stores[0] || null,
+            category: ''
         })
     }, [stores, reset, modalNew])
+
+    useEffect(() => {
+        setNextProduct(false)
+    }, [modalNew])
 
     return (
         <Modal
@@ -54,6 +66,13 @@ export const ProductRegister = () => {
                 <Modal.Title>Ingresar producto</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                <Form.Check
+                    type="switch"
+                    id="next-switch"
+                    label="Registar y pasar al siguiente?"
+                    value={nextProduct}
+                    onChange={e => setNextProduct(e.target.value)}
+                />
                 <form onSubmit={handleSubmit(handleRegister)}>
                     <div className="row">
                         <div className="col-12 col-md-6">
@@ -135,7 +154,7 @@ export const ProductRegister = () => {
                             </Form.Group>
                         </div>
                     </div>
-                    <Button style={{ width: '100%' }} type='submit' variant='success'>
+                    <Button type='submit' style={{ width: '100%' }} variant='success'>
                         INGRESAR
                     </Button>
                 </form>
