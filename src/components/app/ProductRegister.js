@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
 import { Controller, useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
@@ -11,10 +11,12 @@ export const ProductRegister = () => {
 
     const dispatch = useDispatch()
     const { stores } = useSelector(state => state.auth)
-    const { activeNew, modalNew } = useSelector(state => state.product)
-    const { register, control, handleSubmit } = useForm({
+    const { modalNew } = useSelector(state => state.product)
+    const { register, control, setValue, handleSubmit, reset } = useForm({
         defaultValues: {
-            store: stores[0] || null
+            store: stores[0] || null,
+            price: 1,
+            code: ''
         }
     })
 
@@ -29,9 +31,17 @@ export const ProductRegister = () => {
     }
 
     const handleScanCode = () => {
-        dispatch(setCodeModal((code) => dispatch(editActiveNewProduct({ code }))))
+        dispatch(setCodeModal((code) => setValue('code', code)))
         dispatch(openModalScanCode())
     }
+
+    useEffect(() => {
+        reset({
+            store: stores[0] || null,
+            price: 1,
+            code: ''
+        })
+    }, [stores, reset, modalNew])
 
     return (
         <Modal
@@ -49,14 +59,14 @@ export const ProductRegister = () => {
                         <div className="col-12 col-md-6">
                             <Form.Group className='mb-3' controlId='pName'>
                                 <Form.Label>Nombre</Form.Label>
-                                <Form.Control {...register('name', { required: true })} type={'text'} autoFocus />
+                                <Form.Control {...register('name', { required: true })} type={'text'} autoFocus autoComplete='off' />
                             </Form.Group>
                         </div>
                         <div className="col-12 col-md-6">
                             <Form.Group className='mb-3' controlId='pCode'>
                                 <Form.Label>Código</Form.Label>
                                 <InputGroup>
-                                    <Form.Control {...register('code')} type={'text'} defaultValue={activeNew.code} />
+                                    <Form.Control {...register('code')} type={'text'} autoComplete='off' />
                                     <Button
                                         onClick={handleScanCode}
                                         variant='dark'
@@ -83,13 +93,13 @@ export const ProductRegister = () => {
                         <div className="col-12 col-md-6">
                             <Form.Group className='mb-3' controlId='pPrice'>
                                 <Form.Label>Precio</Form.Label>
-                                <Form.Control {...register('price', { required: true, min: 0 })} type={'number'} step={0.01} />
+                                <Form.Control {...register('price', { required: true, min: 0 })} type={'number'} step={0.01} min={0.01} autoComplete='off' />
                             </Form.Group>
                         </div>
                         <div className="col-12 col-md-6">
                             <Form.Group className='mb-3' controlId='pMeasure'>
                                 <Form.Label>Tipo de medida</Form.Label>
-                                <Form.Select {...register('measure', { required: true })} >
+                                <Form.Select {...register('measure', { required: true })} autoComplete='off'>
                                     <option value={1}>Unidad</option>
                                     <option value={2}>Kilogramos</option>
                                     <option value={3}>Litros</option>
@@ -121,7 +131,7 @@ export const ProductRegister = () => {
                         <div className="col-12 col-md-6">
                             <Form.Group className='mb-3' controlId='pCategory'>
                                 <Form.Label>Categoria</Form.Label>
-                                <Form.Control {...register('category', { required: true })} type={'text'} />
+                                <Form.Control {...register('category', { required: true })} type={'text'} autoComplete='off' />
                             </Form.Group>
                         </div>
                     </div>

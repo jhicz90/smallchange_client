@@ -1,6 +1,27 @@
 import { fetchByToken } from '../helpers/Fetch'
 import { Actions } from '../types/Actions'
 
+export const startListProduct = () => {
+    return async (dispatch, getState) => {
+        const { search } = getState().product
+
+        dispatch(startLoadingListProduct())
+
+        const resp = await fetchByToken({
+            endpoint: 'product/list',
+            params: { search }
+        })
+
+        if (resp.ok) {
+            dispatch(loadListProduct(resp.docs))
+        } else {
+            dispatch(loadListProduct([]))
+        }
+
+        dispatch(stopLoadingListProduct())
+    }
+}
+
 export const startNewProduct = () => {
     return async (dispatch) => {
         const resp = await fetchByToken({
@@ -26,6 +47,8 @@ export const startSaveNewProduct = () => {
 
         if (resp.ok) {
             dispatch(closeModalNewProduct())
+            dispatch(removeActiveNewProduct())
+            dispatch(startListProduct())
         }
     }
 }
