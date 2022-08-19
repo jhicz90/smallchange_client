@@ -47,7 +47,7 @@ const Scanner = () => {
                         html5QrCode.clear()
                     })
                     .catch((err) => {
-                        dispatch(finishScanCode('Cancelar'))
+                        dispatch(finishScanCode(''))
                         console.log(err.message)
                     })
             } catch (err) {

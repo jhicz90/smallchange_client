@@ -4,7 +4,7 @@ const initialState = {
     sidebar: true,
     sidebarMobile: false,
     modalScanCode: false,
-    modaSetCode: null
+    modalSetCode: null
 }
 
 export const UIReducer = (state = initialState, action) => {
@@ -42,7 +42,7 @@ export const UIReducer = (state = initialState, action) => {
         case Actions.setCodeModal:
             return {
                 ...state,
-                modaSetCode: action.payload
+                modalSetCode: action.payload
             }
 
         default:
