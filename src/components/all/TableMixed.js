@@ -46,7 +46,14 @@ export const TableMixed = ({ columns = [], data = [], noData = null, className }
                     {
                         rowsTable.length > 0
                             ? rowsTable
-                            : <td className='p-2 text-center' colSpan={columnsTable.length}>{noData || 'No hay datos que mostar'}</td>
+                            : <tr>
+                                <td
+                                    className='p-2 text-center'
+                                    colSpan={columnsTable.length}
+                                >
+                                    {noData || 'No hay datos que mostar'}
+                                </td>
+                            </tr>
                     }
                 </tbody>
             </TableStyle>
