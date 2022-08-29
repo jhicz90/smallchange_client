@@ -8,7 +8,7 @@ const TableStyle = styled(Table)`
     margin-bottom: 0 !important;
 `
 
-export const TableMixed = ({ columns = [], data = [] }) => {
+export const TableMixed = ({ columns = [], data = [], noData = null, className }) => {
 
     const columnsTable = columns.map(({ key, name = '' }) => {
         return <th key={key || nanoid()}>
@@ -35,7 +35,7 @@ export const TableMixed = ({ columns = [], data = [] }) => {
     )
 
     return (
-        <Card className='overflow-hidden'>
+        <Card className={`overflow-hidden ${className}`}>
             <TableStyle striped responsive>
                 <thead>
                     <tr>
@@ -43,7 +43,11 @@ export const TableMixed = ({ columns = [], data = [] }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {rowsTable}
+                    {
+                        rowsTable.length > 0
+                            ? rowsTable
+                            : <td className='p-2 text-center' colSpan={columnsTable.length}>{noData || 'No hay datos que mostar'}</td>
+                    }
                 </tbody>
             </TableStyle>
         </Card>

@@ -31,7 +31,7 @@ export const CheckStoreNew = () => {
                                 <div className="col-12 col-md-6">
                                     <FloatingLabel
                                         controlId='name'
-                                        label='Nombres'
+                                        label='Nombre de la tienda'
                                         className='mb-3'
                                     >
                                         <Form.Control
@@ -69,7 +69,6 @@ export const CheckStoreNew = () => {
                                             type='text'
                                             placeholder='Ingresa el correo de la tienda'
                                             autoComplete='off'
-                                            autoFocus
                                             {...register('email')}
                                         />
                                     </FloatingLabel>
@@ -87,7 +86,6 @@ export const CheckStoreNew = () => {
                                             style={{ minHeight: '100px' }}
                                             placeholder='Ingresa dirección'
                                             autoComplete='off'
-                                            autoFocus
                                             {...register('address')}
                                         />
                                     </FloatingLabel>
@@ -105,7 +103,6 @@ export const CheckStoreNew = () => {
                                             style={{ minHeight: '100px' }}
                                             placeholder='Ingresa alguna descripción de la tienda'
                                             autoComplete='off'
-                                            autoFocus
                                             {...register('desc')}
                                         />
                                     </FloatingLabel>

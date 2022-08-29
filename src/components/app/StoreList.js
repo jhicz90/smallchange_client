@@ -22,29 +22,31 @@ export const StoreList = () => {
             name: 'Estado',
             width: 100,
             renderRow: (row) => {
-                return <Status status={row.status} />;
+                return <Status status={row.status} />
             }
         },
         {
             key: 'createdAt',
             name: 'Creado',
             renderRow: (row) => {
-                return <TimeAgo date={row.createdAt} />;
+                return <TimeAgo date={row.createdAt} />
             }
         },
         {
             key: 'updatedAt',
             name: 'Actualizado',
             renderRow: (row) => {
-                return <TimeAgo type={2} date={row.updatedAt} />;
+                return <TimeAgo type={2} date={row.updatedAt} />
             }
         },
         {
             name: 'Acción',
-            renderRow: (row) => <div className='d-flex gap-2'>
-                <Link to={`/app/stores/${row._id}`} state={{ backgroundLocation: location }}>Editar</Link>
-                <span className='link-primary' style={{ cursor: 'pointer' }}>Eliminar</span>
-            </div>
+            renderRow: (row) => (
+                <div className='d-flex gap-2'>
+                    <Link to={`/app/stores/${row._id}`} state={{ backgroundLocation: location }}>Editar</Link>
+                    <span className='link-primary' style={{ cursor: 'pointer' }}>Eliminar</span>
+                </div>
+            )
         }
     ]
 

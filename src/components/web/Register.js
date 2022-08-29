@@ -152,8 +152,8 @@ export const Register = () => {
                                                 required: true,
                                                 validate: {
                                                     matchesPreviousPassword: (value) => {
-                                                        const { password } = getValues();
-                                                        return password === value || "Las contraseñas no coinciden!";
+                                                        const { password } = getValues()
+                                                        return password === value || 'Las contraseñas no coinciden!'
                                                     }
                                                 }
                                             })}

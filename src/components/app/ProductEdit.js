@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { BsUpcScan } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
+import { AiOutlinePlus } from 'react-icons/ai'
 import { editActiveProduct, removeActiveProduct, startGetProduct, startUpdateActiveProduct } from '../../actions/Product'
 import { openModalScanCode, setCodeModal } from '../../actions/UI'
 import { LoadingPage } from '../all/LoadingPage'
+import { TableMixed } from '../all/TableMixed'
 
 export const ProductEdit = () => {
 
@@ -25,6 +27,7 @@ export const ProductEdit = () => {
             category
         }
     })
+    const [newPriceSpecial, setNewPriceSpecial] = useState(false)
 
     const handleUpdate = (data) => {
         dispatch(editActiveProduct({ ...data }))
@@ -122,6 +125,32 @@ export const ProductEdit = () => {
                                 </div>
                             </div>
                             <div className="row">
+                                <div className="col-12">
+                                    <Button
+                                        onClick={() => setNewPriceSpecial(true)}
+                                        variant='primary'
+                                        className='w-100 mb-1'
+                                    >
+                                        <AiOutlinePlus size={20} className='me-1' />
+                                        Agregue un nuevo precio especial
+                                    </Button>
+                                    <ModalPriceSpecial
+                                        show={newPriceSpecial}
+                                        onHide={() => setNewPriceSpecial(false)}
+                                    />
+                                    <TableMixed
+                                        className='mb-3'
+                                        columns={[
+                                            { key: 'name', name: 'Nombre' },
+                                            { key: 'price', name: 'Precio' },
+                                            { key: 'quantity', name: 'Cantidad' }
+                                        ]}
+                                        data={[]}
+                                        noData={'No ahi precios especiales'}
+                                    />
+                                </div>
+                            </div>
+                            <div className="row">
                                 <div className="col-12 col-md-6">
                                     <Form.Group className='mb-3' controlId='pCategory'>
                                         <Form.Label>Categoria</Form.Label>
@@ -134,6 +163,34 @@ export const ProductEdit = () => {
                             </Button>
                         </form>
                 }
+            </Modal.Body>
+        </Modal>
+    )
+}
+
+const ModalPriceSpecial = ({ show, onHide }) => {
+    const { register, handleSubmit } = useForm({
+        defaultValues: {
+            name,
+            price,
+            quantity
+        }
+    })
+
+    return (
+        <Modal
+            show={show}
+            onHide={onHide}
+            backdrop='static'
+            centered
+        >
+            <Modal.Header closeButton closeVariant='white' style={{ backgroundColor: '#ffc107' }}>
+                <Modal.Title>Nuevo precio especial</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <form>
+
+                </form>
             </Modal.Body>
         </Modal>
     )
