@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { Button, Form, InputGroup, Modal } from 'react-bootstrap'
-import { useForm } from 'react-hook-form'
+import React, { useEffect } from 'react'
+import { Button, ButtonGroup, FloatingLabel, Form, InputGroup, ListGroup, Modal } from 'react-bootstrap'
+import { useFieldArray, useForm } from 'react-hook-form'
 import { BsUpcScan } from 'react-icons/bs'
+import { AiFillSave, AiOutlinePlus } from 'react-icons/ai'
+import { IoRemove } from 'react-icons/io5'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AiOutlinePlus } from 'react-icons/ai'
 import { editActiveProduct, removeActiveProduct, startGetProduct, startUpdateActiveProduct } from '../../actions/Product'
 import { openModalScanCode, setCodeModal } from '../../actions/UI'
 import { LoadingPage } from '../all/LoadingPage'
-import { TableMixed } from '../all/TableMixed'
 
 export const ProductEdit = () => {
 
@@ -16,18 +16,22 @@ export const ProductEdit = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const { active } = useSelector(state => state.product)
-    const { name, code, desc, price, measure, category } = active
-    const { register, setValue, handleSubmit, reset } = useForm({
+    const { name, code, desc, price, measure, category, specialPrices } = active
+    const { register, setValue, getValues, control, handleSubmit, reset } = useForm({
         defaultValues: {
             name,
             code,
             desc,
             price,
             measure,
-            category
+            category,
+            specialPrices
         }
     })
-    const [newPriceSpecial, setNewPriceSpecial] = useState(false)
+    const { fields, append, update, remove } = useFieldArray({
+        control,
+        name: 'specialPrices'
+    })
 
     const handleUpdate = (data) => {
         dispatch(editActiveProduct({ ...data }))
@@ -51,10 +55,12 @@ export const ProductEdit = () => {
             desc,
             price,
             measure,
-            category
+            category,
+            specialPrices
         })
-    }, [reset, name, code, desc, price, measure, category])
+    }, [reset, name, code, desc, price, measure, category, specialPrices])
 
+    console.log(fields)
     return (
         <Modal
             size='lg'
@@ -104,6 +110,14 @@ export const ProductEdit = () => {
                                 </div>
                             </div>
                             <div className="row">
+                                <div className="col-12">
+                                    <Form.Group className='mb-3' controlId='pCategory'>
+                                        <Form.Label>Categoria</Form.Label>
+                                        <Form.Control {...register('category', { required: true })} type={'text'} autoComplete='off' />
+                                    </Form.Group>
+                                </div>
+                            </div>
+                            <div className="row">
                                 <div className="col-12 col-md-6">
                                     <Form.Group className='mb-3' controlId='pPrice'>
                                         <Form.Label>Precio</Form.Label>
@@ -127,35 +141,35 @@ export const ProductEdit = () => {
                             <div className="row">
                                 <div className="col-12">
                                     <Button
-                                        onClick={() => setNewPriceSpecial(true)}
+                                        onClick={() => {
+                                            append({
+                                                name: `${getValues().name} precio especial`,
+                                                price: getValues().price,
+                                                quantity: 1
+                                            });
+                                        }}
                                         variant='primary'
                                         className='w-100 mb-1'
                                     >
                                         <AiOutlinePlus size={20} className='me-1' />
                                         Agregue un nuevo precio especial
                                     </Button>
-                                    <ModalPriceSpecial
-                                        show={newPriceSpecial}
-                                        onHide={() => setNewPriceSpecial(false)}
-                                    />
-                                    <TableMixed
-                                        className='mb-3'
-                                        columns={[
-                                            { key: 'name', name: 'Nombre' },
-                                            { key: 'price', name: 'Precio' },
-                                            { key: 'quantity', name: 'Cantidad' }
-                                        ]}
-                                        data={[]}
-                                        noData={'No ahi precios especiales'}
-                                    />
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-12 col-md-6">
-                                    <Form.Group className='mb-3' controlId='pCategory'>
-                                        <Form.Label>Categoria</Form.Label>
-                                        <Form.Control {...register('category', { required: true })} type={'text'} autoComplete='off' />
-                                    </Form.Group>
+                                    <ListGroup className='mb-3'>
+                                        {
+                                            fields.map((item, index) => {
+                                                return (
+                                                    <ListGroup.Item key={item.id}>
+                                                        <EditPriceSpecial
+                                                            update={update}
+                                                            index={index}
+                                                            value={item}
+                                                            remove={() => remove(index)}
+                                                        />
+                                                    </ListGroup.Item>
+                                                )
+                                            })
+                                        }
+                                    </ListGroup>
                                 </div>
                             </div>
                             <Button type='submit' style={{ width: '100%' }} variant='success'>
@@ -168,30 +182,73 @@ export const ProductEdit = () => {
     )
 }
 
-const ModalPriceSpecial = ({ show, onHide }) => {
+const EditPriceSpecial = ({ update, index, value, remove }) => {
     const { register, handleSubmit } = useForm({
-        defaultValues: {
-            name,
-            price,
-            quantity
-        }
+        defaultValues: value
     })
 
     return (
-        <Modal
-            show={show}
-            onHide={onHide}
-            backdrop='static'
-            centered
-        >
-            <Modal.Header closeButton closeVariant='white' style={{ backgroundColor: '#ffc107' }}>
-                <Modal.Title>Nuevo precio especial</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-                <form>
+        <div className='hstack gap-3' onSubmit={handleSubmit((data) => {
+            update(index, data)
+        })}>
+            <div className="row">
+                <div className="col-12">
+                    <FloatingLabel
+                        label='Nombre precio especial'
+                        className='mb-2'
+                    >
+                        <Form.Control
+                            type='text'
+                            placeholder='Nombre precio especial'
+                            autoComplete='off'
+                            autoFocus
+                            {...register('name', { required: true, minLength: 4 })}
+                        />
+                    </FloatingLabel>
+                </div>
+                <div className="col-6">
+                    <FloatingLabel
+                        label='Precio especial'
+                    >
+                        <Form.Control
+                            type='number'
+                            placeholder='Precio especial'
+                            autoComplete='off'
+                            {...register('price', { required: true, min: 0.01 })}
+                        />
+                    </FloatingLabel>
+                </div>
+                <div className="col-6">
+                    <FloatingLabel
+                        label='Cantidad'
+                    >
+                        <Form.Control
+                            type='number'
+                            placeholder='Cantidad'
+                            autoComplete='off'
+                            {...register('quantity', { required: true, min: 1 })}
+                        />
+                    </FloatingLabel>
+                </div>
+            </div>
+            <ButtonGroup size='sm'>
+                <Button
+                    variant='primary'
+                    type='submit'
+                    onClick={handleSubmit((data) => {
+                        update(index, data)
+                    })}
+                >
+                    <AiFillSave size={20} />
+                </Button>
 
-                </form>
-            </Modal.Body>
-        </Modal>
-    )
+                <Button
+                    variant='danger'
+                    onClick={remove}
+                >
+                    <IoRemove size={20} />
+                </Button>
+            </ButtonGroup>
+        </div>
+    );
 }
