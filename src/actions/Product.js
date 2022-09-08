@@ -23,13 +23,15 @@ export const startListProduct = () => {
 }
 
 export const startNewProduct = () => {
-    return async (dispatch) => {
+    return async (dispatch, getState) => {
+        const { stores } = getState().auth
+
         const resp = await fetchByToken({
             endpoint: `product/create/new`
         })
 
         if (resp.ok) {
-            dispatch(loadActiveNewProduct(resp.product))
+            dispatch(loadActiveNewProduct({ ...resp.product, stores }))
             dispatch(openModalNewProduct())
         }
     }
@@ -39,10 +41,12 @@ export const startSaveNewProduct = ({ next = false }) => {
     return async (dispatch, getState) => {
         const { activeNew } = getState().product
 
+        const newProduct = { ...activeNew, brand: activeNew.brand.value, category: activeNew.category.value }
+
         const resp = await fetchByToken({
             endpoint: `product/create/new`,
             method: 'POST',
-            data: activeNew
+            data: newProduct
         })
 
         if (resp.ok) {

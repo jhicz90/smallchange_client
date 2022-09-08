@@ -35,7 +35,39 @@ export const Actions = {
     removeActiveNewStore: '[store] remove active new store',
     // STORE
 
-    // STORE
+    // CATEGORY
+    searchCategory: '[category] search of categorys',
+    loadListCategory: '[category] list of categorys',
+    startLoadingListCategory: '[category] start loading list of categorys',
+    stopLoadingListCategory: '[category] stop loading list of categorys',
+    loadActiveCategory: '[category] active category',
+    editActiveCategory: '[category] edit active category',
+    removeActiveCategory: '[category] remove active category',
+
+    openModalNewCategory: '[category] open modal new category',
+    closeModalNewCategory: '[category] close modal new category',
+    loadActiveNewCategory: '[category] active new category',
+    editActiveNewCategory: '[category] edit active new category',
+    removeActiveNewCategory: '[category] remove active new category',
+    // CATEGORY
+
+    // BRAND
+    searchBrand: '[brand] search of brands',
+    loadListBrand: '[brand] list of brands',
+    startLoadingListBrand: '[brand] start loading list of brands',
+    stopLoadingListBrand: '[brand] stop loading list of brands',
+    loadActiveBrand: '[brand] active brand',
+    editActiveBrand: '[brand] edit active brand',
+    removeActiveBrand: '[brand] remove active brand',
+
+    openModalNewBrand: '[brand] open modal new brand',
+    closeModalNewBrand: '[brand] close modal new brand',
+    loadActiveNewBrand: '[brand] active new brand',
+    editActiveNewBrand: '[brand] edit active new brand',
+    removeActiveNewBrand: '[brand] remove active new brand',
+    // BRAND
+
+    // PRODUCT
     searchProduct: '[product] search of products',
     loadListProduct: '[product] list of products',
     startLoadingListProduct: '[product] start loading list of products',
@@ -49,5 +81,5 @@ export const Actions = {
     loadActiveNewProduct: '[product] active new product',
     editActiveNewProduct: '[product] edit active new product',
     removeActiveNewProduct: '[product] remove active new product',
-    // STORE
+    // PRODUCT
 }

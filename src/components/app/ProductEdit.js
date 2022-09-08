@@ -60,7 +60,6 @@ export const ProductEdit = () => {
         })
     }, [reset, name, code, desc, price, measure, category, specialPrices])
 
-    console.log(fields)
     return (
         <Modal
             size='lg'
@@ -250,5 +249,5 @@ const EditPriceSpecial = ({ update, index, value, remove }) => {
                 </Button>
             </ButtonGroup>
         </div>
-    );
+    )
 }
