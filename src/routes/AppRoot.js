@@ -8,6 +8,7 @@ import { EditOfProduct } from '../pages/app/products/edit'
 import { ListOfProducts } from '../pages/app/products/list'
 import { EditOfStore } from '../pages/app/store/edit'
 import { ListOfStore } from '../pages/app/store/list'
+import { ListOfStorehouse } from '../pages/app/storehouse/list'
 
 const AppRoot = () => {
 
@@ -37,6 +38,7 @@ const AppRoot = () => {
                     <Route index element={<Home />} />
                     <Route path={`stores`} element={<ListOfStore />} />
                     <Route path={`products`} element={<ListOfProducts />} />
+                    <Route path={`warehouse`} element={<ListOfStorehouse />} />
                 </Route>
             </Routes>
             {

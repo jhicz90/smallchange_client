@@ -2,13 +2,12 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, useLocation } from 'react-router-dom'
 import { useDebounce } from 'use-debounce'
-import { startListProduct } from '../../actions/Product'
-import { Status, TableMixed, TimeAgo } from '../all'
+import { TableMixed, TimeAgo } from '../all'
 
-export const ProductList = () => {
+export const StorehouseList = () => {
 
     const dispatch = useDispatch()
-    const { list, search } = useSelector(state => state.product)
+    const { list, search } = useSelector(state => state.storehouse)
     const [valueSearch] = useDebounce(search, 3000)
     const location = useLocation()
 
@@ -23,18 +22,17 @@ export const ProductList = () => {
             }
         },
         {
-            key: 'status',
-            name: 'Estado',
-            width: 100,
+            key: 'quantity',
+            name: 'Cantidad',
             renderRow: (row) => {
-                return <Status status={row.status} />
+                return <>{row.quantity}</>
             }
         },
         {
-            key: 'createdAt',
-            name: 'Creado',
+            key: 'priceq',
+            name: 'Precio total (S/.)',
             renderRow: (row) => {
-                return <TimeAgo date={row.createdAt} />
+                return <>{(row.price * row.quantity).toFixed(2)}</>
             }
         },
         {
@@ -55,7 +53,7 @@ export const ProductList = () => {
 
 
     useEffect(() => {
-        dispatch(startListProduct())
+        // dispatch(startListProduct())
     }, [valueSearch, dispatch])
 
     return (

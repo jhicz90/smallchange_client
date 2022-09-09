@@ -82,4 +82,20 @@ export const Actions = {
     editActiveNewProduct: '[product] edit active new product',
     removeActiveNewProduct: '[product] remove active new product',
     // PRODUCT
+
+    // STOREHOUSE
+    searchStorehouse: '[storehouse] search of storehouses',
+    loadListStorehouse: '[storehouse] list of storehouses',
+    startLoadingListStorehouse: '[storehouse] start loading list of storehouses',
+    stopLoadingListStorehouse: '[storehouse] stop loading list of storehouses',
+    loadActiveStorehouse: '[storehouse] active storehouse',
+    editActiveStorehouse: '[storehouse] edit active storehouse',
+    removeActiveStorehouse: '[storehouse] remove active storehouse',
+
+    openModalNewStorehouse: '[storehouse] open modal new storehouse',
+    closeModalNewStorehouse: '[storehouse] close modal new storehouse',
+    loadActiveNewStorehouse: '[storehouse] active new storehouse',
+    editActiveNewStorehouse: '[storehouse] edit active new storehouse',
+    removeActiveNewStorehouse: '[storehouse] remove active new storehouse',
+    // STOREHOUSE
 }
